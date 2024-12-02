@@ -1,6 +1,6 @@
 # aoc2024
 
-<img width="176" alt="image" src="https://github.com/user-attachments/assets/e0e52cb4-99ab-4db6-bddf-d57a0cb934d7">
+<img width="172" alt="image" src="https://github.com/user-attachments/assets/407b78f0-9c5d-4fc0-bbe4-3fb1064ba387">
 
 Advent of Code 2024
 
