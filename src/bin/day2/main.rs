@@ -16,8 +16,12 @@ impl FromStr for Report {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> anyhow::Result<Self> {
-        let res: Result<Vec<_>, _> = s.split_ascii_whitespace().map(|n| n.parse()).collect();
-        Ok(Self { levels: res? })
+        Ok(Self {
+            levels: s
+                .split_ascii_whitespace()
+                .map(|n| n.parse())
+                .collect::<Result<_, _>>()?,
+        })
     }
 }
 
