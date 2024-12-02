@@ -4,4 +4,4 @@
 
 Advent of Code 2024
 
-Use cd src/bin/dayN; cargo run --bin dayN to run a specific day's challenge.
+Use `cd src/bin/dayN; cargo run --bin dayN` to run a specific day's challenge.
