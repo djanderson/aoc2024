@@ -2,6 +2,8 @@
 
 use std::{fs, str::FromStr};
 
+use anyhow::{Error, Result};
+
 fn main() {
     println!("part1: {}", part1());
     println!("part2: {}", part2());
@@ -13,9 +15,9 @@ struct Report {
 }
 
 impl FromStr for Report {
-    type Err = anyhow::Error;
+    type Err = Error;
 
-    fn from_str(s: &str) -> anyhow::Result<Self> {
+    fn from_str(s: &str) -> Result<Self> {
         Ok(Self {
             levels: s
                 .split_ascii_whitespace()
