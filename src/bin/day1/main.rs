@@ -9,7 +9,6 @@ fn part1() -> u32 {
     let input = fs::read_to_string("input.txt").unwrap();
     let (mut v1, mut v2): (Vec<i32>, Vec<i32>) = input
         .lines()
-        .into_iter()
         .map(|line| {
             let mut numbers = line.split_ascii_whitespace();
             let num1: i32 = numbers.next().unwrap().parse().expect("number");
@@ -26,7 +25,6 @@ fn part2() -> u32 {
     let input = fs::read_to_string("input.txt").unwrap();
     let (nums1, nums2): (Vec<u32>, Vec<u32>) = input
         .lines()
-        .into_iter()
         .map(|line| {
             let mut numbers = line.split_ascii_whitespace();
             let num1: u32 = numbers.next().unwrap().parse().expect("number");
