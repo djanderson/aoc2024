@@ -49,8 +49,63 @@ fn part1() -> i32 {
 }
 
 fn part2() -> i32 {
-    let input = fs::read_to_string("example.txt").unwrap();
-    input.lines().count() as i32
+    let input = fs::read_to_string("input.txt").unwrap();
+    let (page_ordering_rules, pages_to_update) = input.split_once("\n\n").unwrap();
+    let mut ordering_rules: HashMap<i32, HashSet<i32>> = HashMap::new();
+    for rule in page_ordering_rules.lines() {
+        let (s1, s2) = rule.split_once('|').unwrap();
+        let n1 = s1.parse().expect("number");
+        let n2 = s2.parse().expect("number");
+        ordering_rules
+            .entry(n1)
+            .and_modify(|set| _ = set.insert(n2))
+            .or_insert(HashSet::from([n2]));
+    }
+    let updates = pages_to_update
+        .lines()
+        .map(|line| Update::from_str(line).unwrap());
+    let mut sum = 0;
+    let empty_hashset = HashSet::new();
+    for update in updates {
+        let mut pages = update.pages;
+        let mut correct = true;
+        for (i, page) in pages.iter().enumerate() {
+            let earlier_pages: HashSet<i32> = HashSet::from_iter(pages[..i].iter().cloned());
+            let later_pages = ordering_rules.get(page).unwrap_or(&empty_hashset);
+            if !earlier_pages.is_disjoint(later_pages) {
+                correct = false;
+                break;
+            }
+        }
+        if !correct {
+            // Must sort the updates.
+            while !correct {
+                correct = true;
+                for (i, page) in pages.iter().enumerate() {
+                    let earlier_pages: HashSet<i32> =
+                        HashSet::from_iter(pages[..i].iter().cloned());
+                    let later_pages = ordering_rules.get(page).unwrap_or(&empty_hashset);
+                    if !earlier_pages.is_disjoint(later_pages) {
+                        correct = false;
+                        // Sort
+                        let mut j = 0;
+                        for (page_idx, earlier_page) in pages[..i].iter().enumerate() {
+                            if later_pages.contains(earlier_page) {
+                                j = page_idx;
+                                break;
+                            }
+                        }
+                        pages.swap(i, j);
+                        break;
+                    }
+                }
+            }
+            let middle_page = pages[pages.len() / 2];
+            sum += middle_page;
+        }
+    }
+
+    sum
 }
 
 struct Update {
