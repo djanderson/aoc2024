@@ -32,6 +32,25 @@ impl Calibration {
         // 3 numbers = 2 bits
         // 4 numbers = 3 bits
         // etc...
+        //
+        // The approach here is to use the bits of a range of numbers to
+        // pick the operator between any two numbers.
+        // For example, if I have the Calibration 3267: 81 40 27, I
+        // now that I need to try the following:
+        // 81 + 40 + 27
+        // 81 + 40 * 27
+        // 81 * 40 + 27
+        // 81 * 40 * 27
+        //
+        // This looks like an increasing bit pattern, with + == 0 and * == 1.
+        // (0, 0) = 0
+        // (0, 1) = 1
+        // (1, 0) = 2
+        // (1, 1) = 3
+        //
+        // Instead of walking the bits, I just look at the low bit (with & 1) and
+        // right shift the number to move the next highest bit into that position
+        // on each iteration.
         let nbits = self.operands.len() as u32 - 1;
         for i in 0..(2u32.pow(nbits)) {
             let mut n = i;
