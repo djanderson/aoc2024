@@ -31,7 +31,7 @@ fn part1() -> usize {
     // Build antinode location map.
     let mut antinodes: HashSet<Point> = HashSet::new();
     for (frequency, locations) in antennas.iter() {
-        // Use 2 cursors to get all combinations of 2 points for this antenna.
+        // Use 2 cursors to get all combinations of 2 points for this frequency.
         for i in 0..locations.len() - 1 {
             for j in i + 1..locations.len() {
                 let p1 = &locations[i];
@@ -81,7 +81,7 @@ fn part2() -> usize {
     // Build antinode location map.
     let mut antinodes: HashSet<Point> = HashSet::new();
     for (_frequency, locations) in antennas.iter() {
-        // Use 2 cursors to get all combinations of 2 points for this antenna.
+        // Use 2 cursors to get all combinations of 2 points for this frequency.
         for i in 0..locations.len() - 1 {
             for j in i + 1..locations.len() {
                 let p1 = &locations[i];
